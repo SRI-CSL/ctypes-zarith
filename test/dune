@@ -6,7 +6,6 @@
   ctypes.foreign
   test_stubgen
   test_foreign
-  test_ppx
 ))
 
 (alias

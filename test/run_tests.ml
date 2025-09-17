@@ -57,13 +57,11 @@ end
 
 module Add_foreign = Add (Test_foreign)
 module Add_stubgen = Add (Test_stubgen)
-module Add_ppx = Add (Test_ppx)
 
 let () =
   Alcotest.run "ctypes-zarith"
     [
       ("add (foreign)", [ ("add (foreign)", `Quick, Add_foreign.test_add) ]);
       ("add (stubgen)", [ ("add (stubgen)", `Quick, Add_stubgen.test_add) ]);
-      ("add (ppx)", [ ("add (ppx)", `Quick, Add_ppx.test_add) ]);
       ("gc", [ ("gc", `Slow, Gc.compact) ]);
     ]

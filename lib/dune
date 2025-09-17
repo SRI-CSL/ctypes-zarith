@@ -3,15 +3,10 @@
  (deps (:discover config/discover.exe))
  (action (run %{discover} -system %{ocaml-config:system})))
 
-(rule
-  (targets ctypes_zarith.ml ctypes_zarith_stubs.c)
-  (deps (:first-dep ctypes_zarith.c.ml) c_flags.lines)
-  (action (chdir %{workspace_root} (run %{bin:ppx_cstubs} -I %{lib:zarith:.} %{first-dep} -o %{targets} -- %{read-lines:c_flags.lines}))))
-
 (library
  (name ctypes_zarith)
  (public_name ctypes-zarith)
  (c_names ctypes_zarith_stubs)
  (c_flags (:include c_flags.sexp))
- (libraries ctypes ppx_cstubs zarith)
+ (libraries ctypes zarith)
  (synopsis "demo how to deal with Z.t from ctypes"))
