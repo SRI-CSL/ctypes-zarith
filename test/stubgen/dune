@@ -1,18 +1,27 @@
 (rule
  (targets generated_stubs.c)
- (deps (:discover stub-gen/driver.exe))
+ (deps
+  (:discover stub-gen/driver.exe))
  (action
-  (with-stdout-to generated_stubs.c (run %{discover} -c))))
+  (with-stdout-to
+   generated_stubs.c
+   (run %{discover} -c))))
 
 (rule
  (targets generated_bindings.ml)
- (deps (:discover stub-gen/driver.exe))
+ (deps
+  (:discover stub-gen/driver.exe))
  (action
-  (with-stdout-to generated_bindings.ml (run %{discover} -ml))))
+  (with-stdout-to
+   generated_bindings.ml
+   (run %{discover} -ml))))
 
 (library
+ (foreign_stubs
+  (language c)
+  (names generated_stubs)
+  (flags
+   (:include ../../lib/c_flags.sexp)))
  (name test_stubgen)
- (c_names generated_stubs)
  (private_modules generated_bindings)
- (c_flags (:include ../../lib/c_flags.sexp))
  (libraries ctypes ctypes-zarith ctypes_zarith_test_stubs))

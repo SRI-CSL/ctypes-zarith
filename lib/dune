@@ -1,12 +1,17 @@
 (rule
  (targets c_flags.sexp c_library_flags.sexp c_flags.lines)
- (deps (:discover config/discover.exe))
- (action (run %{discover} -system %{ocaml-config:system})))
+ (deps
+  (:discover config/discover.exe))
+ (action
+  (run %{discover} -system %{ocaml-config:system})))
 
 (library
+ (foreign_stubs
+  (language c)
+  (names ctypes_zarith_stubs)
+  (flags
+   (:include c_flags.sexp)))
  (name ctypes_zarith)
  (public_name ctypes-zarith)
- (c_names ctypes_zarith_stubs)
- (c_flags (:include c_flags.sexp))
  (libraries ctypes zarith)
  (synopsis "demo how to deal with Z.t from ctypes"))
